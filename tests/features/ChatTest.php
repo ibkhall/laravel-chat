@@ -45,7 +45,7 @@ class ChatTest extends TestCase
     public function testGlobal()
     {
         $route = config('khall_chat.route');
-        $this->assertSame('/messagerie', $route);
+        $this->assertEquals('/messagerie', $route);
     }
 
     /**
