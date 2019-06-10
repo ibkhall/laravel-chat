@@ -24,7 +24,7 @@ class ChatServiceProvider extends ServiceProvider
         $this->loadViewsFrom(\dirname(__DIR__) . '/views', 'chat');
         $this->publishes(
             [
-            \dirname(__DIR__) . '/views' => resource_path('views/vendor/chat'),
+            \dirname(__DIR__) . '/views/' => resource_path('views/vendor/chat'),
             ]
         );
     }
