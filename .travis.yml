@@ -1,18 +1,16 @@
 language: php
-dist: 'Bionic Beaver'
 
 php:
   - 7.1
   - 7.2
 
+env:
+  global:
+    - setup=basic
+
+sudo: false
+
 install:
-  - composer selfupdate
-  - composer install
+  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
 
-script:
-  - ./vendor/bin/phpcs -s
-  - ./vendor/bin/php-cs-fixer fix --diff --dry-run
-  - ./vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
-
-after_success:
-  - travis_retry php vendor/bin/php-coveralls
+script: vendor/bin/phpunit
