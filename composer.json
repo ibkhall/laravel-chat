@@ -1,0 +1,40 @@
+{
+    "name": "khall/laravel-chat",
+    "description": "A chat package for laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Khall",
+            "email": "ibrahimkhall212@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Khall\\Chat\\": "src",
+            "Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "khall\\Chat\\ChatServiceProvider"
+            ]
+        }
+    },
+    "keywords": [
+        "laravel",
+        "chat",
+        "messaging",
+        "conversation"
+    ],
+    "require": {
+        "php": ">=7.1",
+        "illuminate/support": "^5.8"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.5",
+        "squizlabs/php_codesniffer": "^3.4"
+    }
+}
