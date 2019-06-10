@@ -10,12 +10,9 @@ class UserPolicy
 
     /**
      * Create a new policy instance.
-     *
-     * @return void
      */
     public function __construct()
     {
-        //
     }
 
     public function talkTo(User $user, User $to)

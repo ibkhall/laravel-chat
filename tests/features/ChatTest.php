@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Features;
 
 use Illuminate\Foundation\Application;
@@ -9,7 +10,6 @@ use Orchestra\Testbench\TestCase;
 
 class ChatTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     public function setUp(): void
@@ -18,20 +18,20 @@ class ChatTest extends TestCase
         $this->artisan('vendor:publish --tag=config');
         $this->loadLaravelMigrations();
         User::create([
-            'name' => "user1",
-            'email' => "user1@mail.fr",
+            'name'     => 'user1',
+            'email'    => 'user1@mail.fr',
             'password' => bcrypt('123456')
         ]);
         User::create([
-            'name' => "user2",
-            'email' => "user2@mail.fr",
+            'name'     => 'user2',
+            'email'    => 'user2@mail.fr',
             'password' => bcrypt('123456')
         ]);
     }
 
-
     /**
      * @param Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -39,18 +39,17 @@ class ChatTest extends TestCase
         return [ChatServiceProvider::class];
     }
 
-
     /**
-     * test configuration package
+     * test configuration package.
      */
     public function testGlobal()
     {
         $route = config('khall_chat.route');
-        $this->assertEquals('/messagerie', $route);
+        $this->assertSame('/messagerie', $route);
     }
 
     /**
-     * Test Get list of conversations for a user
+     * Test Get list of conversations for a user.
      */
     public function testGetConversationsList()
     {
@@ -63,28 +62,28 @@ class ChatTest extends TestCase
     }
 
     /**
-     *Test show Conversation
+     *Test show Conversation.
      */
     public function testShowConversation()
     {
         $user = User::find(1);
         $user2 = User::find(2);
         $res = $this->actingAs($user)
-            ->get(config('khall_chat.route').'/'.$user2->id);
+            ->get(config('khall_chat.route') . '/' . $user2->id);
         $res->assertStatus(200);
         $res->assertViewHas('users');
         $res->assertViewHas('unread');
     }
 
     /**
-     * Test store message
+     * Test store message.
      */
     public function testStoreMessage()
     {
         $user = User::find(1);
         $user2 = User::find(2);
         $res = $this->actingAs($user)
-            ->post(config('khall_chat.route').'/'.$user2->id, ['content' => 'salut']);
+            ->post(config('khall_chat.route') . '/' . $user2->id, ['content' => 'salut']);
         $res->assertStatus(302);
         $res->assertSessionHas('success');
     }

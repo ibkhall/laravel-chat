@@ -1,4 +1,5 @@
 <?php
+
 namespace Khall\Chat;
 
 use Carbon\Carbon;
@@ -8,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConversationRepository
 {
-
     /**
      * @var User
      */
@@ -20,7 +20,8 @@ class ConversationRepository
 
     /**
      * ConversationRepository constructor.
-     * @param User $user
+     *
+     * @param User    $user
      * @param Message $message
      */
     public function __construct(User $user, Message $message)
@@ -29,10 +30,11 @@ class ConversationRepository
         $this->message = $message;
     }
 
-
     /**
-     * get conversation for a user
+     * get conversation for a user.
+     *
      * @param int $userId
+     *
      * @return Builder[]|Collection
      */
     public function getConversations(int $userId)
@@ -43,28 +45,32 @@ class ConversationRepository
     }
 
     /**
-     * create message
+     * create message.
+     *
      * @param string $content
-     * @param int $from
-     * @param int $to
+     * @param int    $from
+     * @param int    $to
+     *
      * @return Builder|Model
      */
     public function createMessage(string $content, int $from, int $to)
     {
         return $this->message->newQuery()->create(
             [
-            'content' => $content,
-            'from_id' => $from,
-            'to_id' => $to,
+            'content'    => $content,
+            'from_id'    => $from,
+            'to_id'      => $to,
             'created_at' => Carbon::now()
             ]
         );
     }
 
     /**
-     * get messages for two users
+     * get messages for two users.
+     *
      * @param int $from
      * @param int $to
+     *
      * @return Builder
      */
     public function getMessagesFor(int $from, int $to): Builder
@@ -80,9 +86,10 @@ class ConversationRepository
     }
 
     /**
-     * get the number of messages unread
+     * get the number of messages unread.
      *
-     * @param  int $userId
+     * @param int $userId
+     *
      * @return Builder[]|Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
      */
     public function unreadCount(int $userId)
@@ -97,7 +104,8 @@ class ConversationRepository
     }
 
     /**
-     * read all messages
+     * read all messages.
+     *
      * @param int $from
      * @param int $to
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace Khall\Chat;
 
 use Illuminate\Database\Eloquent\Model;
@@ -6,13 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
-
     public $timestamps = false;
     protected $guarded = [];
     protected $dates = ['created_at', 'read_at'];
 
     /**
-     * Message from user
+     * Message from user.
+     *
      * @return BelongsTo
      */
     public function from()
@@ -21,7 +22,8 @@ class Message extends Model
     }
 
     /**
-     * Message to user
+     * Message to user.
+     *
      * @return BelongsTo
      */
     public function to()

@@ -14,7 +14,9 @@ use Illuminate\View\View;
 
 class ConversationController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
     /**
      * @var ConversationRepository
      */
@@ -31,23 +33,25 @@ class ConversationController extends Controller
     }
 
     /**
-     * Get conversation list
+     * Get conversation list.
      *
      * @return Factory|View
      */
     public function index()
     {
         $id = Auth::user()->id;
+
         return view('chat::index', [
-            'users' => $this->repository->getConversations($id),
+            'users'  => $this->repository->getConversations($id),
             'unread' => $this->repository->unreadCount($id)
             ]);
     }
 
     /**
-     * show conversation
+     * show conversation.
      *
      * @param  $id
+     *
      * @return Factory|View
      */
     public function show($id)
@@ -55,22 +59,24 @@ class ConversationController extends Controller
         $currentUser = Auth::user()->id;
         $user = DB::table('users')->where('id', '=', $id)->get()->first();
         $this->repository->readAll($user->id, $currentUser);
+
         return view('chat::show', [
-            'users' => $this->repository->getConversations($currentUser),
-            'unread' => $this->repository->unreadCount($currentUser),
+            'users'    => $this->repository->getConversations($currentUser),
+            'unread'   => $this->repository->unreadCount($currentUser),
             'messages' => $this->repository->getMessagesFor($user->id, $currentUser)->paginate(3),
-            'user' => $user
+            'user'     => $user
             ]);
     }
 
-
     /**
-     * Store message
+     * Store message.
      *
      * @param  $id
-     * @param  Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store($id, Request $request)
     {
