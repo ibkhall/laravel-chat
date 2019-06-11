@@ -9,6 +9,12 @@ install:
   - composer selfupdate
   - composer install
 
+test:
+  adapter: sqlite3
+  database: ":memory:"
+  timeout: 500
+
+
 script:
   - ./vendor/bin/phpcs -s
   - ./vendor/bin/php-cs-fixer fix --diff --dry-run
