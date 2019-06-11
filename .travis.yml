@@ -13,6 +13,10 @@ install:
 servics:
   - sqlite
 
+test:
+  adapter: sqlite3
+  database: ":memory:"
+  timeout: 500
 
 script:
   - ./vendor/bin/phpcs -s
