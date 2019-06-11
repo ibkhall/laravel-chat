@@ -3,11 +3,16 @@ language: php
 php:
   - 7.1
   - 7.2
-
+env:
+  - DB=sqlite
 
 install:
   - composer selfupdate
   - composer install
+
+servics:
+  - sqlite
+
 
 script:
   - ./vendor/bin/phpcs -s
