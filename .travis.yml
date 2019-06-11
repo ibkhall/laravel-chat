@@ -1,18 +1,38 @@
-language: php
 dist: xenial
+language: php
 
-php:
-  - 7.1
-  - 7.2
+env:
+  global:
+    - SETUP=stable
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.2
+    - php: 7.2
+      env: SETUP=lowest
+    - php: 7.3
+    - php: 7.3
+      env: SETUP=lowest
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+services:
+  - memcached
+  - redis-server
+  - mysql
+
+before_install:
+  - phpenv config-rm xdebug.ini || true
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - printf "\n" | pecl install -f redis
+  - travis_retry composer self-update
+  - mysql -e 'CREATE DATABASE forge;'
 
 install:
-  - composer selfupdate
-  - composer install
+  - if [[ $SETUP = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $SETUP = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
 
-script:
-  - ./vendor/bin/phpcs -s
-  - ./vendor/bin/php-cs-fixer fix --diff --dry-run
-  - ./vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
-
-after_success:
-  - travis_retry php vendor/bin/php-coveralls
+script: vendor/bin/phpunit
