@@ -60,6 +60,7 @@ class ChatTest extends TestCase
         $uri = config('khall_chat.route');
         $res = $this->actingAs($user)
             ->get($uri);
+        var_dump($res->baseResponse);
         $res->assertStatus(200);
         $res->assertViewHas('users');
         $res->assertViewHas('unread');
