@@ -56,7 +56,6 @@ class ChatTest extends TestCase
      */
     public function testPackage()
     {
-
         $this->assertTrue(true);
     }
 
