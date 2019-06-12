@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "khall\\Chat\\ChatServiceProvider"
+                "Khall\\Chat\\ChatServiceProvider"
             ]
         }
     },
