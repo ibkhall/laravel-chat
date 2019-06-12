@@ -1,5 +1,3 @@
-
-
 @section('content')
 <div class="card-outline-info">
     <div class="card-body">
