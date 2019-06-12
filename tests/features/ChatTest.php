@@ -52,21 +52,6 @@ class ChatTest extends TestCase
     }
 
     /**
-     * Test Get list of conversations for a user.
-     */
-    public function testGetConversationsList()
-    {
-        $user = User::find(1);
-        $uri = config('khall_chat.route');
-        $res = $this->actingAs($user)
-            ->get($uri);
-        var_dump($res->baseResponse);
-        $res->assertStatus(200);
-        $res->assertViewHas('users');
-        $res->assertViewHas('unread');
-    }
-
-    /**
      *Test show Conversation.
      */
     public function testShowConversation()
