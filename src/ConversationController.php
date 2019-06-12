@@ -45,7 +45,7 @@ class ConversationController extends Controller
     {
         $id = Auth::user()->id;
 
-        return view('chat::index', [
+        return view('vendor.chat.index', [
             'users'  => $this->repository->getConversations($id),
             'unread' => $this->repository->unreadCount($id)
             ]);
@@ -64,7 +64,7 @@ class ConversationController extends Controller
         $user = DB::table('users')->where('id', '=', $id)->get()->first();
         $this->repository->readAll($user->id, $currentUser);
 
-        return view('chat::show', [
+        return view('vendor.chat.show', [
             'users'    => $this->repository->getConversations($currentUser),
             'unread'   => $this->repository->unreadCount($currentUser),
             'messages' => $this->repository->getMessagesFor($user->id, $currentUser)->paginate(3),

@@ -14,17 +14,15 @@ class ChatServiceProvider extends ServiceProvider
             ],
             'config'
         );
-        $times = date('Y_m_d_His');
-        $path = '/database/migrations/2019_06_001212_create_message_table.php';
+        $path = '/database/migrations/';
 
         $this->publishes(
             [
-                \dirname(__DIR__) . $path => database_path('/migrations/' . $times . '_create_message_table.php'),
+                \dirname(__DIR__) . $path => database_path('/migrations/'),
             ],
             'migrations'
         );
 
-        $this->loadViewsFrom(\dirname(__DIR__) . '/views', 'chat');
         $this->publishes(
             [
             \dirname(__DIR__) . '/views/' => resource_path('/views/vendor/chat'),

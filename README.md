@@ -13,4 +13,11 @@ composer require khall/laravel-chat
 
 ### how to use it ?
 
+```bash
+php artisan vendor:publish --provider="Khall\Chat\ChatServiceProvider" 
+```
 
+This command will generate
+- **views** vendor/chat 
+- **config** file of configuration in config path
+- **migrations** in database/migrations folder 
