@@ -6,7 +6,7 @@
             <div class="list-group">
                 @foreach($users as $user)
                     <a href="{{ route('chat.show', $user) }}" class="list-group-item list-group-item-action">
-                        {{ $user->fullName }}
+                        {{ $user->name }}
                         @if(isset($unread[$user->id]))
                             <span class="badge float-sm-none text-white badge-success badge-sm badge-pill">{{ $unread[$user->id] }}</span>
                         @endif

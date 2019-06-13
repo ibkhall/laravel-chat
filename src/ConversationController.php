@@ -8,10 +8,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\View\View;
 
 class ConversationController extends Controller
@@ -32,8 +30,8 @@ class ConversationController extends Controller
     public function __construct(ConversationRepository $repository)
     {
         $this->repository = $repository;
-        $this->middleware(StartSession::class);
-        $this->middleware(ShareErrorsFromSession::class);
+        $this->middleware('web');
+        $this->middleware('auth');
     }
 
     /**
