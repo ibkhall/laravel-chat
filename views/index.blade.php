@@ -1,6 +1,6 @@
 
 @section('content')
-    <h3 class="text-center text-primary">Chat</h3>
+    <h3 class="text-center text-primary">Laravel Chat</h3>
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">

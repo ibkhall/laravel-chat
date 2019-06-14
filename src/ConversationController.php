@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,19 +55,22 @@ class ConversationController extends Controller
      *
      * @param  $id
      *
-     * @return Factory|View
+     * @return Factory|View|Response
      */
     public function show($id)
     {
         $currentUser = Auth::user()->id;
+        if ((int) $currentUser === (int) $id) {
+            return new Response('Forbidden', 403);
+        }
         $user = DB::table('users')->where('id', '=', $id)->get()->first();
         $this->repository->readAll($user->id, $currentUser);
 
         return view('vendor.chat.show', [
-            'users'    => $this->repository->getConversations($currentUser),
-            'unread'   => $this->repository->unreadCount($currentUser),
-            'messages' => $this->repository->getMessagesFor($user->id, $currentUser)->paginate(3),
-            'user'     => $user
+            'users'      => $this->repository->getConversations($currentUser),
+            'unread'     => $this->repository->unreadCount($currentUser),
+            'messages'   => $this->repository->getMessagesFor($user->id, $currentUser)->paginate(3),
+            'target'     => $user
             ]);
     }
 
@@ -78,10 +82,13 @@ class ConversationController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|Response
      */
     public function store($id, Request $request)
     {
+        if ((int) $request->user()->id === (int) $id) {
+            return new Response('Forbidden', 403);
+        }
         $this->validate($request, [
             'content' => 'required|min:4'
             ]);

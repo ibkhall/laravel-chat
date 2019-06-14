@@ -108,4 +108,20 @@ class ChatTest extends TestCase
         $mes = Message::all();
         $this->assertIsObject($mes);
     }
+
+    public function testConversationFakeUser()
+    {
+        $user = User::find(1);
+        $res = $this->actingAs($user)
+            ->get(config('khall_chat.route') . '/' . $user->id);
+        $res->assertStatus(403);
+    }
+
+    public function testStoreMessageToAuthUser()
+    {
+        $user = User::find(1);
+        $res = $this->actingAs($user)
+            ->post(config('khall_chat.route') . '/' . $user->id);
+        $res->assertStatus(403);
+    }
 }
